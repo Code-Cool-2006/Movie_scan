@@ -38,6 +38,12 @@
             "backgroundColor": "#000000"
           }
         }
+      ],
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow Movie_scan to access your camera to scan ticket QR codes."
+        }
       ]
     ],
     "experiments": {

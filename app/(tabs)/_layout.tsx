@@ -1,35 +1,85 @@
 import { Tabs } from 'expo-router';
 import React from 'react';
-
-import { HapticTab } from '@/components/haptic-tab';
-import { IconSymbol } from '@/components/ui/icon-symbol';
-import { Colors } from '@/constants/theme';
-import { useColorScheme } from '@/hooks/use-color-scheme';
+import { Ionicons } from '@expo/vector-icons';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
+  const { bottom } = useSafeAreaInsets();
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+        tabBarActiveTintColor: '#D4AF6A',
+        tabBarInactiveTintColor: '#80808E',
         headerShown: false,
-        tabBarButton: HapticTab,
+        tabBarStyle: {
+          backgroundColor: '#08080B',
+          borderTopWidth: 1,
+          borderTopColor: '#16161C',
+          height: 56 + bottom,
+          paddingBottom: bottom,
+          paddingTop: 6,
+        },
+        tabBarLabelStyle: { fontSize: 11, fontWeight: '600' },
       }}>
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+          title: 'Scanner',
+          tabBarIcon: ({ color, focused }) => (
+            <Ionicons
+              name={focused ? 'qr-code' : 'qr-code-outline'}
+              size={24}
+              color={color}
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="manual"
+        options={{
+          title: 'Manual Entry',
+          tabBarIcon: ({ color, focused }) => (
+            <Ionicons
+              name={focused ? 'keypad' : 'keypad-outline'}
+              size={24}
+              color={color}
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="shows"
+        options={{
+          title: "Today's Shows",
+          tabBarIcon: ({ color, focused }) => (
+            <Ionicons
+              name={focused ? 'film' : 'film-outline'}
+              size={24}
+              color={color}
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="logs"
+        options={{
+          title: 'Scan Logs',
+          tabBarIcon: ({ color, focused }) => (
+            <Ionicons
+              name={focused ? 'receipt' : 'receipt-outline'}
+              size={24}
+              color={color}
+            />
+          ),
         }}
       />
       <Tabs.Screen
         name="explore"
         options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          href: null, // Hide explore starter tab from tab bar
         }}
       />
     </Tabs>
   );
 }
+
